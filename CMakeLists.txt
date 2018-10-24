@@ -59,6 +59,33 @@ cmake_dependent_option(SPDLOG_BUILD_TESTING
     "BUILD_TESTING" OFF
 )
 
+#---------------------------------------------------------------------------------------
+# spdlog tweakme config
+#---------------------------------------------------------------------------------------
+option(SPDLOG_CLOCK_COARSE "Enable under Linux, the much faster CLOCK_REALTIME_COARSE clock can be used" OFF)
+option(SPDLOG_NO_DATETIME "Enable if date/time logging is not needed and never appear in the log pattern" OFF)
+option(SPDLOG_NO_THREAD_ID "Enable if thread id logging is not needed (i.e. no %t in the log pattern)" OFF)
+option(SPDLOG_DISABLE_TID_CACHING "Enable to prevent spdlog from caching thread ids in thread local storage" OFF)
+option(SPDLOG_NO_NAME "Enable if logger name logging is not needed" OFF)
+option(SPDLOG_DEBUG_ON "Enable usuage of the SPDLOG_DEBUG macro" OFF)
+option(SPDLOG_TRACE_ON "Enable usuage of the SPDLOG_TRACE macro" OFF)
+option(SPDLOG_NO_ATOMIC_LEVELS "Enable to avoid spdlog's usage of atomic log levels" OFF)
+option(SPDLOG_WCHAR_FILENAMES "Enable usage of wchar_t for file names on Windows" OFF)
+option(SPDLOG_EOL "Enable to override default eol ('\n' or '\r\n' under Linux/Windows)" OFF)
+option(SPDLOG_FMT_EXTERNAL "Enable to use your own copy of the fmt library instead of spdlog's copy" OFF)
+option(SPDLOG_WCHAR_TO_UTF8_SUPPORT "Enable wchar_t support (convert to utf8)" OFF)
+option(SPDLOG_PREVENT_CHILD_FD "Enable to prevent child processes from inheriting log file descriptors" OFF)
+option(SPDLOG_ENABLE_MESSAGE_COUNTER "Enable the message counting feature" OFF)
+option(SPDLOG_LEVEL_NAMES "xxx" OFF)
+option(SPDLOG_DISABLE_DEFAULT_LOGGER "Enable to disable default logger creation" OFF)
+
+# this is not entirely correct... but will had to do for now...
+configure_file(
+    "cmake/tweakme.h.in"
+    "${CMAKE_CURRENT_LIST_DIR}/include/spdlog/tweakme.h"
+    @ONLY
+)
+
 target_include_directories(
     spdlog
     INTERFACE
